@@ -10,6 +10,12 @@ canvas {
   border: 2px solid yellow;
 }
 
+image {
+  display: block;
+  overflow: hidden;
+  max-width: 100%;
+}
+
 #scene-container {
   padding: 1em;
   background-color: aquamarine;

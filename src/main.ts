@@ -3,8 +3,7 @@ import { Border } from "./Maze/model/Border.ts"
 import { Maze } from "./Maze/model/Maze.ts"
 import { Role } from "./Maze/model/Role.ts"
 import { Renderer } from "./Maze/view/Renderer.ts"
-// import { MazeGraph } from "./Maze/graph/MazeGraph.ts"
-import { MazeGraph } from "./Maze/graph/MazeGraphTest.ts"
+import { MazeGraph } from "./Maze/graph/MazeGraph.ts"
 
 import { Solution } from "./Maze/graph/Solution.ts"
 
@@ -26,18 +25,17 @@ function main() {
         new Square(11, 2, 3, new Border(Border.BOTTOM | Border.RIGHT))
     ]
 
-    const maze = new Maze(squares)
     const renderer = new Renderer(200)
+
+    // const maze = new Maze(squares)
+    const maze = Maze.generate(5, 5)
 
     container!.append(renderer.domElement)
     
-    // const graph = MazeGraph.createFromMaze(maze)
-    const graph = new MazeGraph(maze)
-    const solution = new Solution(graph.getShortestPath(maze.entrace, maze.exit))
+    // const graph = new MazeGraph(maze)
+    // const solution = new Solution(graph.getShortestPath(maze.entrace, maze.exit))
 
-    renderer.render(maze, solution)
-
-    console.log(solution)
+    renderer.render(maze)
 }
 
 main()

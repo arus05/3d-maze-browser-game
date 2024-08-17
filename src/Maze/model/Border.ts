@@ -13,11 +13,22 @@ class Border {
     static BOTTOM = BorderT.BOTTOM
     static LEFT = BorderT.LEFT
     static RIGHT = BorderT.RIGHT
+    static ALL = BorderT.TOP | BorderT.BOTTOM | BorderT.LEFT | BorderT.RIGHT
 
-    value: BorderT
+    private _value: BorderT
 
     constructor(value: BorderT) {
-        this.value = value
+        this._value = value
+    }
+
+    get value() {
+        return this._value
+    }
+
+    remove(toRemove: BorderT) {
+        const flipped = ~toRemove
+        // do and with current value
+        this._value = this._value & flipped
     }
 
 }

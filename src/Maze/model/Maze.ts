@@ -1,3 +1,6 @@
+import { MazeGraph } from "../graph/MazeGraph";
+import { getRandomInt } from "../utils/utils";
+import { Border } from "./Border";
 import { Role } from "./Role";
 import { Square } from "./Square";
 
@@ -50,6 +53,59 @@ class Maze {
 
     get height() {
         return this._height
+    }
+
+    static generate(width: number, height: number): Maze {
+        const squares = MazeGraph.generateRandomMazeSquares(width, height)
+
+        const entranceLocation = Math.random()
+
+        if (entranceLocation < 0.25) {  // entrance top
+            let randomCol = getRandomInt(0, width-1)
+            const entrance = squares[randomCol]
+            entrance.role = Role.ENTRANCE
+            // entrance.border.remove(Border.TOP)
+
+            randomCol = getRandomInt(0, width-1)
+            const exit = squares[width * (height - 1) + randomCol]
+            exit.role = Role.EXIT
+            exit.border.remove(Border.BOTTOM)
+        }
+        else if (entranceLocation < 0.5) {  // entrance bottom
+            let randomCol = getRandomInt(0, width-1)
+            const entrance = squares[width * (height - 1) + randomCol]
+            entrance.role = Role.ENTRANCE
+            // entrance.border.remove(Border.BOTTOM)
+
+            randomCol = getRandomInt(0, width-1)
+            const exit = squares[randomCol]
+            exit.role = Role.EXIT
+            exit.border.remove(Border.TOP)
+        }
+        else if (entranceLocation < 0.75) {  // entrance left
+            let randomRow = getRandomInt(0, height-1)
+            const entrance = squares[randomRow * width]
+            entrance.role = Role.ENTRANCE
+            // entrance.border.remove(Border.LEFT)
+
+            randomRow = getRandomInt(0, height-1)
+            const exit = squares[randomRow * width + width - 1]
+            exit.role = Role.EXIT
+            exit.border.remove(Border.RIGHT)
+        }
+        else {  // entrance right
+            let randomRow = getRandomInt(0, height-1)
+            const entrance = squares[randomRow * width + width - 1]
+            entrance.role = Role.ENTRANCE
+            // entrance.border.remove(Border.RIGHT)
+
+            randomRow = getRandomInt(0, height-1)
+            const exit = squares[randomRow * width]
+            exit.role = Role.EXIT
+            exit.border.remove(Border.LEFT)
+        }
+
+        return new Maze(squares)
     }
 
     // ---------------------------------------

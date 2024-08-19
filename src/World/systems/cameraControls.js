@@ -5,8 +5,8 @@ function createControls(camera, canvas, character) {
     const controls = new OrbitControls(camera, canvas)
 
     camera.position.copy(character.position)
-    camera.position.y += 5
-    camera.position.z += 12
+    // camera.position.y += 5
+    // camera.position.z += 12
     
     controls.target.copy(character.position)
     controls.target.y += 2

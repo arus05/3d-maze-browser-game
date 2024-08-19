@@ -1,9 +1,8 @@
-import { Maze } from "../model/Maze"
+import { Maze } from "../../Maze"
 import { Line, Point, Polyline } from "./primitives"
 import { drawBorder } from "./decomposer"
-import { Solution } from "../graph/Solution"
-import { Role } from "../model/Role"
-import { Square } from "../model/Square"
+import { Solution } from "../../graph/Solution"
+import { Square } from "../../model/Square"
 
 const SQUARE_SIZE: number = 50
 

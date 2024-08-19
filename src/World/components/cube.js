@@ -25,20 +25,11 @@ function createCube() {
         // console.log(cameraXZDirection)
         const distanceX = speed * cameraXZDirection.x * delta
         const distanceZ = speed * cameraXZDirection.y * delta
-        // if (keyPressed["a"] || keyPressed["A"]) {   // left (-x)
-        //     cube.position.x += distanceX
-        //     cube.position.z += distanceZ
-        // }
-        // if (keyPressed["d"] || keyPressed["D"]) {   // right (+x)
-        //     cube.position.x += distance
-        // }
+
         if (keyPressed["w"] || keyPressed["W"]) {   // forward (-z)
             cube.position.x += distanceX
             cube.position.z += distanceZ
         }
-        // if (keyPressed["s"] || keyPressed["S"]) {   // backward (+z)
-        //     cube.position.z += distance
-        // }
 
     }
 

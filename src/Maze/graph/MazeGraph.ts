@@ -2,6 +2,7 @@ import { Graph, UndirectedEdge } from "../../DSA/graph/Graph";
 import { Border } from "../model/Border";
 import { Square } from "../model/Square";
 import { getRandomInt } from "../utils/utils";
+import { Solution } from "./Solution";
 
 type Vertex = Square
 
@@ -99,7 +100,7 @@ class MazeGraph {
         return squares
     }
 
-    getShortestPath(src: Vertex, dest: Vertex): Array<Vertex> {
+    solve(src: Vertex, dest: Vertex): Solution {
         const srcIndex = this._indexOf.get(src) ?? -1
         const destIndex = this._indexOf.get(dest) ?? -1
 
@@ -116,7 +117,7 @@ class MazeGraph {
             shortestPathVertices.push(this._graph.getData(i))
         }
 
-        return shortestPathVertices
+        return new Solution(shortestPathVertices)
     }
     
 }

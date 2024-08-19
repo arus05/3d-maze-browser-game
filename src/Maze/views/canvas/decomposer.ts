@@ -1,4 +1,4 @@
-import { Border } from "../model/Border";
+import { Border } from "../../model/Border";
 import { DisjointLines, Line, NullPrimitive, Point, Polygon, Polyline } from "./primitives";
 
 function drawBorder(ctx: CanvasRenderingContext2D, border: Border, topLeft: Point, squareSize: number): void {

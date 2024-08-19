@@ -1,4 +1,4 @@
-import { Clock } from "three"
+import { Clock, WebGLRenderer } from "three"
 
 class Loop {
     constructor(renderer, scene, camera, controls, keyControls, characterControls) {

@@ -1,17 +1,18 @@
-import { MazeGraph } from "../graph/MazeGraph";
-import { getRandomInt } from "../utils/utils";
-import { Border } from "./Border";
-import { Role } from "./Role";
-import { Square } from "./Square";
+import { MazeGraph } from "./graph/MazeGraph";
+import { getRandomInt } from "./utils/utils";
+import { Border } from "./model/Border";
+import { Role } from "./model/Role";
+import { Square } from "./model/Square";
 
 class Maze {
-    private _squares: ReadonlyArray<Square>
+    private _squares: Array<Square>
     private _entrance!: Square
     private _exit!: Square
     private _width: number
     private _height: number
+    private _graph: MazeGraph | null = null
     
-    constructor(squares: ReadonlyArray<Square>) {
+    constructor(squares: Array<Square>) {
         this._squares = squares
 
         const { width, height } = Maze.computeArea(squares)
@@ -106,6 +107,20 @@ class Maze {
         }
 
         return new Maze(squares)
+    }
+
+    solve() {
+        if (!this._graph) {
+            this._graph = new MazeGraph(this._squares, this.width, this.height)
+        }
+        
+        const solution = this._graph.solve(this._entrance, this._exit)
+
+        return solution
+    }
+
+    getSquare(row: number, col: number) {
+        return this._squares[row * this._width + col]
     }
 
     // ---------------------------------------

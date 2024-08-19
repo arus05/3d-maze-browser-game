@@ -31,6 +31,22 @@ class Border {
         this._value = this._value & flipped
     }
 
+    hasTop() {
+        return (this._value & Border.TOP) !== 0
+    }
+
+    hasBottom() {
+        return (this._value & Border.BOTTOM) !== 0
+    }
+
+    hasLeft() {
+        return (this._value & Border.LEFT) !== 0
+    }
+
+    hasRight() {
+        return (this._value & Border.RIGHT) !== 0
+    }
+
 }
 
 export { Border }

@@ -3,7 +3,8 @@ import { createCamera } from "./components/camera"
 import { createLights } from "./components/lights"
 import { createFloor } from "./components/floor"
 import { createAxesHelper, createBoxHelper, createGridHelper } from "./components/helpers"
-import { loadBirds } from "./components/Birds/birds"
+import { createMaze } from "./components/maze/maze"
+import { loadBird } from "./components/Birds/bird"
 import { loadLittleTokyo } from "./components/littleTokyo/littleTokyo"
 
 import { createRenderer } from "./systems/renderer"
@@ -14,6 +15,10 @@ import { KeyControls } from "./systems/KeyControls"
 import { CharacterControls } from "./systems/CharacterControls"
 
 import { CollisionDetection } from "./systems/CollisionDetection"
+import { PerspectiveCamera, Scene, WebGLRenderer } from "three"
+import { OrbitControls } from "three/examples/jsm/Addons.js"
+import { createCellBorders } from "./components/maze/cell"
+import { Maze } from "../Maze/Maze"
 
 let scene
 let camera
@@ -41,7 +46,12 @@ class World {
         const { mainLight, ambientLight } = createLights()
 
         // Add scene objects to scene
-        scene.add(axesHelper, gridHelper, mainLight, ambientLight)
+        scene.add(
+            axesHelper,
+            gridHelper,
+            mainLight,
+            ambientLight,
+        )
 
         // Setup resizer
         new Resizer(renderer, camera, container)
@@ -49,20 +59,22 @@ class World {
 
     // Asynchronous constructor
     async init() {
+        const { mazeMesh, mazeEntrance } = createMaze(Maze.generate(7, 7), 7, 6, 1)
+
         const [
             { parrot },
             floor,
-            littleTokyo
         ] = await Promise.all([
-            loadBirds(),
+            loadBird(),
             createFloor(),
-            loadLittleTokyo()
         ])
+
+        parrot.position.x = mazeEntrance.x
+        parrot.position.z = mazeEntrance.z
 
         controls = createControls(camera, renderer.domElement, parrot)
 
         collisionDetection = new CollisionDetection(parrot)
-        collisionDetection.addCollidable(littleTokyo)
         
         characterControls = new CharacterControls(parrot, camera, controls, keyControls, collisionDetection)
 
@@ -71,13 +83,12 @@ class World {
         // Add objects to scene
         scene.add(
             parrot,
-            littleTokyo,
             floor,
+            mazeMesh
         )
 
         // Add animated scene objects to loop.updatables
         loop.updatables.push(parrot, controls)
-
     }
 
     render() {

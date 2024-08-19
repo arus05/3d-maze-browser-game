@@ -1,5 +1,5 @@
 import { Border } from "../../model/Border";
-import { Maze } from "../../model/Maze";
+import { Maze } from "../../Maze";
 import { Square } from "../../model/Square";
 
 type Node = Square
